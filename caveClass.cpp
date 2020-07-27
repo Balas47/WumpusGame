@@ -12,8 +12,11 @@ Cave::Cave(){
   m_randomPits(1);
 }
 
-//Reset the cave
+//Reset the cave when needed
 void Cave::m_reset(){}
+
+//Generate the cave at a higher level
+void Cave::m_nextLevel(){}
 
 pair<int, int> Cave::m_getWumpus(){
   return m_wumpus;

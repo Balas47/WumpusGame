@@ -1,3 +1,9 @@
+//Author: Balas47
+//Purpose: This class will contain all of the information on the Wumpus cave. That is, it will
+//         keep track of the location of Wumpus, the pits, and the pieces of gold. It will also
+//         check what the player is adjacent to/with or not. i.e. whether the player is next to
+//         Wumpus, in the same location as Wumpus, or not. 
+
 
 #ifndef CAVECLASS
 #define CAVECLASS
@@ -16,12 +22,14 @@ private:
   vector<pair<int, int>> m_pits; //Location of all the pits
   vector<pair<int, int>> m_gold; //All gold locations
   int m_allGold;                 //Amount of gold available
+  int m_size;                    //Size of the cave, which will be an nXn square
 
 public:
 
   Cave(); //Default Constructor
 
-  void m_reset(); //Reset the cave
+  void m_reset(); //Reset the cave when needed
+  void m_nextLevel(); //Generate the cave as a higher level
 
   pair<int, int> m_getWumpus(); //Get Wumpus' location
   int m_checkAdj(pair<int, int> player); //Check what the player is adjacent to

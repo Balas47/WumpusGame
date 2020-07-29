@@ -1,3 +1,6 @@
+//Author: Balas47
+//Purpose: The player class will keep track of all player information, including their position in the
+//         cave, the number of javelins they own, and how much gold they have in total.
 
 #ifndef PLAYERCLASS
 #define PLAYERCLASS

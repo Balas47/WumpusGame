@@ -1,4 +1,6 @@
 #include"caveClass.h"
+#include <cstdlib>
+#include<ctime>
 using namespace std;
 
 //Default Constructor
@@ -45,7 +47,7 @@ void Cave::m_nextLevel(){
   m_allGold *= 2;
   m_randomGold();
 
-  m_raondomPits();
+  m_randomPits();
 
 }
 
@@ -69,7 +71,14 @@ bool Cave::m_getDeath(){
   return m_death;
 } //Check whether the Wumpus is dead or not
 
-void Cave::m_randomWumpus(){} //Randomize the location of the Wumpus
+void Cave::m_randomWumpus(){
+  //Initialize random seed
+  srand(time(NULL));
+
+  //The coordinates of Wumpus are randomly chosen
+  m_wumpus.first = rand() % m_size;
+  m_wumpus.second = rand() % m_size;
+} //Randomize the location of the Wumpus
 
 void Cave::m_randomPits(){} //Randomize the location of the pits
 

@@ -4,9 +4,9 @@ using namespace std;
 //Default Constructor
 Player::Player(){
 
-  m_location = make_pair(0,0);
-  m_javelins = 3;
-  m_gold = 300;
+  m_location = make_pair(0,0); //Default location is (0,0)
+  m_javelins = 3;              //Player starts with 3 javelins
+  m_gold = 300;                //Player starts with 300 gold
 
 }
 

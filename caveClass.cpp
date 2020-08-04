@@ -59,7 +59,90 @@ pair<int, int> Cave::m_getWumpus(){
 }//Get Wumpus' location
 
 int Cave::m_checkAdj(pair<int, int> player){
-  return 0;
+  //Note: 100==next to wumpus, 10==next to pit, 1==next to gold
+  //      0==next to nothing, 200==with wumpus, 20=in pit, 2=with gold
+  int checks = 0;
+
+  //Check if the player is next to the Wumpus
+  if(player.first == m_wumpus.first){
+
+    if(player.second == m_wumpus.second){
+      return 200; //Player is with the wumpus
+
+      //Player is on the same row, so now we check if the player is on a column adjacent
+      //to the Wumpus.
+    }else if((player.second == m_wumpus.second + 1) | (player.second == m_wumpus.second - 1)){
+      checks += 100; //Player is adjacent to the wumpus
+
+    }else{
+      checks = 0; //Player is not adjacent to the wumpus
+    }
+    
+  }else if(player.second == m_wumpus.second){
+
+    //Player is on the same column, so now we check if the player is on a row adjacent
+    //to the Wumpus
+    if((player.first == m_wumpus.first + 1) | (player.first == m_wumpus.first - 1)){
+      checks += 100; //Player is adjacent to the wumpus
+
+    }else{
+      checks += 0; //Player is not adjacent to the wumpus
+    }
+  }else{
+    checks += 0; //Player is not adjacent to the wumpus
+  }
+
+  //Check if the player is next to a pit, using an iterator for the pits
+  for(vector<pair<int, int>>::iterator it=m_pits.begin(); it!=m_pits.end(); ++it){
+    
+    //Check if the player is in the same row as a pit
+    if(player.first == it->first){
+      
+      if(player.second == it->second){
+	return 20; //Player is in a pit
+	
+	//Check if the player is also on a column adjacent to the pit
+      }else if((player.second == it->second + 1) | (player.second == it->second - 1)){
+	checks += 10; //Player is adjacent to a pit
+	break;
+      }
+      
+      //Check if the player is in the same column as a pit
+    }else if(player.second == it->second){
+      
+      //Check if the player is in the same row as a pit
+      if((player.first == it->first + 1) | (player.first == it->first - 1)){
+	checks += 10; //Player is adjacent to a pit
+	break;
+      }
+    }
+  }
+  
+  //Check if the player is on a gold pile
+  for(vector<pair<int, int>>::iterator it=m_gold.begin(); it!=m_gold.end(); ++it){
+    
+    //Check if the player is in the same row as a gold pile
+    if(player.first == it->first){
+      
+      if(player.second == it->second){
+        return 2; //Player is in a gold pile
+	
+        //Check if the player is also on a column adjacent to a gold pile
+      }else if((player.second == it->second + 1) | (player.second == it->second - 1)){
+        checks += 1; //Player is adjacent to a gold pile
+      }
+      
+      //Check if the player is in the same column as a gold pile
+    }else if(player.second == it->second){
+      
+      //Check if the player is in the same row as a gold pile
+      if((player.first == it->first + 1) | (player.first == it->first - 1)){
+        checks += 1; //Player is adjacent to a gold pile
+      }
+    }
+  }
+  
+  return checks;
 } //Check what the player is adjacent to
 
 void Cave::m_adjustGold(int change){

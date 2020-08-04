@@ -25,6 +25,14 @@ int main(){
   testPlayer.m_adjustJavelins(-2);
 
   cout << testPlayer.m_getJavelins() << endl;
+
+  Cave testCave = Cave();
+
+  cout << testCave.m_getWumpus().first << ", " << testCave.m_getWumpus().second << endl;
+
+  cout << testCave.m_getGold() << endl;
+
+  cout << testCave.m_checkAdj(testPlayer.m_getLocation()) << endl;
   
   return 0;
 }

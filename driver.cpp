@@ -30,8 +30,18 @@ int main(){
 
   cout << testCave.m_getWumpus().first << ", " << testCave.m_getWumpus().second << endl;
 
+  //Puts the player onto the same column as the wumpus
+  changeLoc.second = testCave.m_getWumpus().second;
+  testPlayer.m_setLocation(changeLoc);
+
   cout << testCave.m_getGold() << endl;
 
+  cout << testCave.m_checkAdj(testPlayer.m_getLocation()) << endl;
+
+  //Should put the player with the wumpus, if not already
+  changeLoc.first = testCave.m_getWumpus().first;
+  testPlayer.m_setLocation(changeLoc);
+  
   cout << testCave.m_checkAdj(testPlayer.m_getLocation()) << endl;
   
   return 0;

@@ -11,3 +11,7 @@ clear:
 	rm *.o
 	rm *.gch
 	rm *~
+git:
+	git add .
+	git rm -f *.out
+	git rm -f wumpusPlan.txt

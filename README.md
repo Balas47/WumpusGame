@@ -1,4 +1,4 @@
-##**Welcome to the Wumpus Game**
+# **Welcome to the Wumpus Game**
 
 The game is pretty simple, go into the Wumpus cave, grab as much gold as you can, and get out.
 Sounds simple and quick... *right*?
@@ -7,7 +7,7 @@ who dares get too close. Secondly, there are a few seemingly bottomless pits sca
 might just keep you from your precious gold. Oh, and I'm not giving you a torch to light your path,
 so I hope youre good at remembering the path youve walked. Are you ready to brave the game?
 
-#**Before Entering the Cave:**
+## **Before Entering the Cave:**
 
 Each player starts with a baseline of 300 gold pieces.
 
@@ -15,7 +15,7 @@ Each player starts with a baseline of 3 javelins.
 
 Before entering the cave, the player has the option to buy a javelin for 100 gold pieces.
 
-#**Player Movement and Actions:**
+## **Player Movement and Actions:**
 
 The player has 4 movement options, Up, Down, Left, and Right.
 
@@ -29,7 +29,7 @@ If the player moves to the position a pit is in, the player will plummet to thei
 
 If the player moves to the position some gold is in, the player has the option to pick up a piece.
 
-#**Wumpus, Pit, and Gold Hints:**
+## **Wumpus, Pit, and Gold Hints:**
 
 If the player is in a position that is adjacent to Wumpus, they will smell a terrible stench.
 
@@ -37,7 +37,7 @@ If the player is in a position that is adjavent to a pit, they will feel a bit o
 
 If the player is in a position that has at least one gold piece, they will see some golden specks.
 
-#**After Leaving the Cave:**
+## **After Leaving the Cave:**
 
 Once the player goes back to the position where they began, they have three options. The player
 can choose to take their gold and leave, continue to search the cave for more gold, or go to a

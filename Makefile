@@ -8,6 +8,6 @@ caveClass.o: caveClass.h caveClass.cpp
 	g++ -Wall caveClass.h caveClass.cpp -c
 
 clear:
-	rm *~
 	rm *.o
 	rm *.gch
+	rm *~

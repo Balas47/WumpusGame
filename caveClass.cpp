@@ -89,6 +89,9 @@ void Cave::m_randomPits(){
 
   //Temporary pair to be put into list of pits
   pair<int, int> temp;
+
+  //Clear the previous pits if they exist
+  if(m_pits.empty()) m_pits.clear();
   
   //For all of the pits in the cave, randomize its location
   for(int i=0;i<m_numPits;i++){
@@ -103,6 +106,9 @@ void Cave::m_randomGold(){
   //Initialize random seed
   srand(time(NULL));
 
+  //Clear the previous gold piles if they exist
+  if(m_gold.empty()) m_gold.clear();
+  
   //Each pile of gold will have 100 pieces
   int numPiles = m_allGold / 100;
 

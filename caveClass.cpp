@@ -14,6 +14,7 @@ Cave::Cave(){
   m_allGold = 400; //Start out with 400 gold pieces available
   m_randomGold();
 
+  m_numPits = 1;
   m_randomPits(); //Start out with one pit
 }
 
@@ -29,7 +30,8 @@ void Cave::m_reset(){
 
   m_allGold = 400;
   m_randomGold();
-
+  
+  m_numPits = 1;
   m_randomPits();
   
 }
@@ -47,6 +49,7 @@ void Cave::m_nextLevel(){
   m_allGold *= 2;
   m_randomGold();
 
+  m_numPits *= 2;
   m_randomPits();
 
 }
@@ -83,13 +86,34 @@ void Cave::m_randomWumpus(){
 void Cave::m_randomPits(){
   //Initialize random seed
   srand(time(NULL));
+
+  //Temporary pair to be put into list of pits
+  pair<int, int> temp;
   
   //For all of the pits in the cave, randomize its location
-  for(vector<pair<int, int>>::iterator it=m_pits.begin(); it!=m_pits.end(); ++it){
-    it->first = rand() % m_size;
-    it->second = rand() % m_size;
+  for(int i=0;i<m_numPits;i++){
+    temp.first = rand() % m_size;
+    temp.second = rand() % m_size;
+    m_pits.push_back(temp);
   }
 
 } //Randomize the location of the pits
 
-void Cave::m_randomGold(){} //Randomize the location of the gold
+void Cave::m_randomGold(){
+  //Initialize random seed
+  srand(time(NULL));
+
+  //Each pile of gold will have 100 pieces
+  int numPiles = m_allGold / 100;
+
+  //Temporary pair to be put into list of gold piles
+  pair<int, int> temp;
+  
+  //Gold piles will be randomly placed
+  for(int i=0;i<numPiles;i++){
+    temp.first = rand() % m_size;
+    temp.second = rand() % m_size;
+    m_gold.push_back(temp);
+  }
+  
+} //Randomize the location of the gold

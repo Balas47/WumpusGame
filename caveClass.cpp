@@ -53,6 +53,8 @@ void Cave::m_reset(){
 //is also twice the number of pits, and the cave becomes twice as large
 void Cave::m_nextLevel(){
 
+  //Everything doubles going to a higher level
+  
   m_size *= 2;
 
   m_randomWumpus();
@@ -187,9 +189,11 @@ void Cave::m_randomPits(){
   for(int i=0;i<m_numPits;i++){
     temp.first = rand() % m_size;
     temp.second = rand() % m_size;
-    m_pits.push_back(temp);
-  }
 
+    //Only add the pit if it isn't adjacent to or with something that already exists
+    if(m_checkAdj(temp) == 0) m_pits.push_back(temp);
+    else i--;
+  }
 } //Randomize the location of the pits
 
 void Cave::m_randomGold(){
@@ -209,7 +213,10 @@ void Cave::m_randomGold(){
   for(int i=0;i<numPiles;i++){
     temp.first = rand() % m_size;
     temp.second = rand() % m_size;
-    m_gold.push_back(temp);
+
+    //Only add the gold pile if it isnt adjacent to or with something that already exists
+    if(m_checkAdj(temp) == 0) m_gold.push_back(temp);
+    else i--;
   }
   
 } //Randomize the location of the gold

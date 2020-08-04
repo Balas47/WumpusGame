@@ -14,4 +14,3 @@ clear:
 git:
 	git add .
 	git rm -f *.out
-	git rm -f wumpusPlan.txt

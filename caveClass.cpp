@@ -80,6 +80,16 @@ void Cave::m_randomWumpus(){
   m_wumpus.second = rand() % m_size;
 } //Randomize the location of the Wumpus
 
-void Cave::m_randomPits(){} //Randomize the location of the pits
+void Cave::m_randomPits(){
+  //Initialize random seed
+  srand(time(NULL));
+  
+  //For all of the pits in the cave, randomize its location
+  for(vector<pair<int, int>>::iterator it=m_pits.begin(); it!=m_pits.end(); ++it){
+    it->first = rand() % m_size;
+    it->second = rand() % m_size;
+  }
+
+} //Randomize the location of the pits
 
 void Cave::m_randomGold(){} //Randomize the location of the gold

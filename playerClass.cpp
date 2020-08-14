@@ -20,34 +20,34 @@ Player::Player(pair<int, int> location, int javelins, int gold){
 }
 
 //Setters and getters
-pair<int, int> Player::m_getLocation(){
+pair<int, int> Player::getLocation(){
   return m_location;
 }
 
-void Player::m_setLocation(pair<int, int> location){
+void Player::setLocation(pair<int, int> location){
   m_location = location;
 }
 
-int Player::m_getJavelins(){
+int Player::getJavelins(){
   return m_javelins;
 }
 
-void Player::m_setJavelins(int javelins){
+void Player::setJavelins(int javelins){
   m_javelins = javelins;
 }
 
-void Player::m_adjustJavelins(int change){
+void Player::adjustJavelins(int change){
   m_javelins += change;
 }
 
-int Player::m_getGold(){
+int Player::getGold(){
   return m_gold;
 }
 
-void Player::m_setGold(int gold){
+void Player::setGold(int gold){
   m_gold = gold;
 }
 
-void Player::m_adjuostGold(int change){
+void Player::adjuostGold(int change){
   m_gold += change;
 }

@@ -22,16 +22,16 @@ public:
   Player(pair<int, int> location, int javelins, int gold); //Overloaded Constructor
 
   //Setters and getters
-  pair<int, int> m_getLocation();
-  void m_setLocation(pair<int, int> location);
+  pair<int, int> getLocation();
+  void setLocation(pair<int, int> location);
 
-  int m_getJavelins();
-  void m_setJavelins(int javelins);
-  void m_adjustJavelins(int change);
+  int getJavelins();
+  void setJavelins(int javelins);
+  void adjustJavelins(int change);
 
-  int m_getGold();
-  void m_setGold(int gold);
-  void m_adjuostGold(int change);
+  int getGold();
+  void setGold(int gold);
+  void adjuostGold(int change);
 
 };
 

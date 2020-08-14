@@ -20,59 +20,59 @@ Cave::Cave(){
 
   m_size = 10; //Start out with a 10X10 cave.
   
-  m_randomWumpus();
+  randomWumpus();
   m_death = false;
 
   m_allGold = 400; //Start out with 400 gold pieces available
-  m_randomGold();
+  randomGold();
 
   m_numPits = 1;
-  m_randomPits(); //Start out with one pit
+  randomPits(); //Start out with one pit
 }
 
 //Reset the cave when needed
 //When the cave resets, it becomes a default cave, so this function
 //is exactly like the default constructor.
-void Cave::m_reset(){
+void Cave::reset(){
   
   m_size = 10;
 
-  m_randomWumpus();
+  randomWumpus();
   m_death = false;
 
   m_allGold = 400;
-  m_randomGold();
+  randomGold();
   
   m_numPits = 1;
-  m_randomPits();
+  randomPits();
   
 }
 
 //Generate the cave at a higher level
 //When the player goes "down" a level, twice the gold is available, but there
 //is also twice the number of pits, and the cave becomes twice as large
-void Cave::m_nextLevel(){
+void Cave::nextLevel(){
 
   //Everything doubles going to a higher level
   
   m_size *= 2;
 
-  m_randomWumpus();
+  randomWumpus();
   m_death = false;
 
   m_allGold *= 2;
-  m_randomGold();
+  randomGold();
 
   m_numPits *= 2;
-  m_randomPits();
+  randomPits();
 
 }
 
-pair<int, int> Cave::m_getWumpus(){
+pair<int, int> Cave::getWumpus(){
   return m_wumpus;
 }//Get Wumpus' location
 
-int Cave::m_checkAdj(pair<int, int> player){
+int Cave::checkAdj(pair<int, int> player){
 					    
   int checks = EMPTY;
 
@@ -154,19 +154,19 @@ int Cave::m_checkAdj(pair<int, int> player){
   return checks;
 } //Check what the player is adjacent to
 
-void Cave::m_adjustGold(int change){
+void Cave::adjustGold(int change){
   m_allGold += change;
 } //Adjust the amount of gold available
 
-int Cave::m_getGold(){
+int Cave::getGold(){
   return m_allGold;
 } //Get the amount of gold available
 
-bool Cave::m_getDeath(){
+bool Cave::getDeath(){
   return m_death;
 } //Check whether the Wumpus is dead or not
 
-void Cave::m_randomWumpus(){
+void Cave::randomWumpus(){
   //Initialize random seed
   srand(time(NULL));
 
@@ -175,7 +175,7 @@ void Cave::m_randomWumpus(){
   m_wumpus.second = rand() % m_size;
 } //Randomize the location of the Wumpus
 
-void Cave::m_randomPits(){
+void Cave::randomPits(){
   //Initialize random seed
   srand(time(NULL));
 
@@ -191,12 +191,12 @@ void Cave::m_randomPits(){
     temp.second = rand() % m_size;
 
     //Only add the pit if it isn't adjacent to or with something that already exists
-    if(m_checkAdj(temp) == 0) m_pits.push_back(temp);
+    if(checkAdj(temp) == 0) m_pits.push_back(temp);
     else i--;
   }
 } //Randomize the location of the pits
 
-void Cave::m_randomGold(){
+void Cave::randomGold(){
   //Initialize random seed
   srand(time(NULL));
 
@@ -215,7 +215,7 @@ void Cave::m_randomGold(){
     temp.second = rand() % m_size;
 
     //Only add the gold pile if it isnt adjacent to or with something that already exists
-    if(m_checkAdj(temp) == 0) m_gold.push_back(temp);
+    if(checkAdj(temp) == 0) m_gold.push_back(temp);
     else i--;
   }
   

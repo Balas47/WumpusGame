@@ -29,18 +29,18 @@ public:
 
   Cave(); //Default Constructor
 
-  void m_reset(); //Reset the cave when needed
-  void m_nextLevel(); //Generate the cave as a higher level
+  void reset(); //Reset the cave when needed
+  void nextLevel(); //Generate the cave as a higher level
 
-  pair<int, int> m_getWumpus(); //Get Wumpus' location
-  int m_checkAdj(pair<int, int> player); //Check what the player is adjacent to
-  void m_adjustGold(int change); //Adjust the amount of gold available
-  int m_getGold(); //Get the amount of gold available
-  bool m_getDeath(); //Check whether the Wumpus is dead or not
+  pair<int, int> getWumpus(); //Get Wumpus' location
+  int checkAdj(pair<int, int> player); //Check what the player is adjacent to
+  void adjustGold(int change); //Adjust the amount of gold available
+  int getGold(); //Get the amount of gold available
+  bool getDeath(); //Check whether the Wumpus is dead or not
 
-  void m_randomWumpus(); //Randomize the location of the Wumpus
-  void m_randomPits(); //Randomize the location of the pits
-  void m_randomGold(); //Randomize the location of the gold
+  void randomWumpus(); //Randomize the location of the Wumpus
+  void randomPits(); //Randomize the location of the pits
+  void randomGold(); //Randomize the location of the gold
   
   
 };

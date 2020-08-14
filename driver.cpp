@@ -6,8 +6,7 @@
 
 #include<utility>
 #include<iostream>
-#include"playerClass.h"
-#include"caveClass.h"
+#include"gameDriver.h"
 using namespace std;
 
 int main(){
@@ -43,6 +42,11 @@ int main(){
   testPlayer.setLocation(changeLoc);
   
   cout << testCave.checkAdj(testPlayer.getLocation()) << endl;
+
+  Game testGame = Game();
+
+  testGame.menu();
+  
   
   return 0;
 }

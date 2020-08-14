@@ -1,6 +1,6 @@
 
 #ifndef GAMEDRIVER
-#DEFINE GAMEDRIVER
+#define GAMEDRIVER
 
 #include <iostream>
 #include <utility>
@@ -14,14 +14,13 @@ class Game{
 
   //Player and Cave members
   Player m_player;
-  Cave m_cave;
+  Cave  m_cave;
 
   //Start/Exit location
   pair<int, int> m_exit;
   
  public:
   Game(); //Default Constructor
-  ~Game(); //Default Destructor
 
   void menu(); //Controls the menu section of the game
   void store(); //Controls the store where the player can buy javelins
@@ -30,4 +29,4 @@ class Game{
 
 };
 
-#ENDIF //GAMEDRIVER
+#endif //GAMEDRIVER

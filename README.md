@@ -33,7 +33,7 @@ If the player moves to the position some gold is in, the player has the option t
 
 If the player is in a position that is adjacent to Wumpus, they will smell a terrible stench.
 
-If the player is in a position that is adjavent to a pit, they will feel a bit of a breeze.
+If the player is in a position that is adjacent to a pit, they will feel a bit of a breeze.
 
 If the player is in a position that has at least one gold piece, they will see some golden specks.
 

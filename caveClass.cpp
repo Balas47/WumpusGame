@@ -137,7 +137,8 @@ int Cave::checkAdj(pair<int, int> player){
     if(player.first == it->first){
       
       if(player.second == it->second){
-        return WGOLD; //Player is in a gold pile
+        checks += WGOLD; //Player is in a gold pile
+	break;
 	
         //Check if the player is also on a column adjacent to a gold pile
       }else if((player.second == it->second + 1) | (player.second == it->second - 1)){

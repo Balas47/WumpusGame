@@ -17,11 +17,32 @@ const int SHOOT = 5;
 const int LEAVE = 6;
 const int DEEPER = 7;
 
+//Constants for precepts
+const int CWUMPUS = 100;
+const int CPIT = 10;
+
+//Information concerning return value for checkAdj()
+const int ADJWUMPUS = 100; //Adjacent to the wumpus
+const int WWUMPUS   = 200; //With the wumpus
+
+const int ADJPIT = 10; //Adjacent to a pit
+const int WPIT   = 20; //With a pit
+
+const int ADJGOLD = 1; //Adjacent to gold
+const int WGOLD   = 2; //With a gold pile
+
+const int EMPTY = 0; //Not adjacent to anything
+
+//Constants for leaving the cave
+const int ALIVE = 1;
+const int DEAD = 2;
+
 Game::Game(){
 
   //Adding in a default cave and player
   m_cave = Cave();
   m_player = Player();
+  m_tempGold = 0;
   
 } //Default Constructor
 
@@ -57,7 +78,20 @@ void Game::menu(){
       //Reset the cave is necessary, and enter
       m_cave.reset();
       cout << "You have entered the cave, good luck..." << endl;
-      cave();
+      {
+	int rewards = cave();
+
+	//Check whether the player gets the gold that they collected
+	if(rewards == ALIVE){
+	  cout << "You have come out of the cave alive... this time..." << endl
+	       << "You have collected " << m_tempGold << " gold pieces" << endl;
+	  m_player.adjustGold(m_tempGold);
+	}else{
+	  cout << "You died and lost " << m_tempGold << " gold pieces" << endl;
+	}
+      }
+      
+      m_tempGold = 0;
       break;
       
     case STORE:
@@ -100,11 +134,12 @@ int Game::cave(){
   m_player.m_location = startPosition;
 
   int options = 0;
+  int status = ALIVE; //The player starts out alive
   
   //Variable for when the player decides to shoot
   int direction = 0;
   
-  while(options != LEAVE){
+  while(options != LEAVE && status == ALIVE){
 
     //Player can choose what to do while in the cave
     cout << "\nWhat are you going to do?" << endl;
@@ -128,28 +163,28 @@ int Game::cave(){
       //Check that the player is not at the top of the cave
       if(m_player.m_location.first < m_cave.getSize()) m_player.m_location.first += 1;
       else cout << "You cannot move up anymore!" << endl;
-      precepts(m_cave.checkAdj(m_player.m_location));
+      status = precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case DOWN:
       //Check that the player is not at the bottom of the cave
       if(m_player.m_location.first > 0) m_player.m_location.first -= 1;
       else cout << "You cannot move down anymore!" << endl;
-      precepts(m_cave.checkAdj(m_player.m_location));
+      status = precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case LEFT:
       //Check that the player is not at the left edge of the cave
       if(m_player.m_location.second > 0) m_player.m_location.second -= 1;
       else cout << "You cannot move left anymore!" << endl;
-      precepts(m_cave.checkAdj(m_player.m_location));
+      status = precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case RIGHT:
       //Check that the player is not at the right edge of the cave
       if(m_player.m_location.second < m_cave.getSize()) m_player.m_location.second += 1;
       else cout << "You cannot move right anymore!" << endl;
-      precepts(m_cave.checkAdj(m_player.m_location));
+      status = precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case SHOOT:
@@ -239,12 +274,38 @@ int Game::cave(){
     
   }
   
-  return 0;
+  return status;
 } //Controls what happens when the player is in the cave
 
 void Game::printBoard(){} //Print out current location in cave, and what the player perceives
 
-void Game::precepts(int value){
+int Game::precepts(int value){
 
-  cout << "You see nothing... or do you?" << endl;
+  //First check if the player is with the Wumpus, or in a pit
+  if(value == WWUMPUS){
+    cout << "THE WUMPUS HAS EATEN YOU" << endl
+	 << "Better Luck Next Time" << endl;
+    return DEAD; //The player has died
+  }else if(value == WPIT){
+    cout << "YOU HAVE FALLEN INTO A PIT" << endl
+	 << "Better Luck Next Time" << endl;
+    return DEAD; //The player has died
+  }else if(value == WGOLD){
+    cout << "You see some gold specks in the air" << endl
+	 << "You have collected 100 gold pieces!" << endl;
+    m_tempGold += 100;
+  }
+  
+  //Check whether the player is adjacent to the Wumpus
+  if(value/CWUMPUS == ADJWUMPUS/CWUMPUS){
+    cout << "You smell a terrible stench... the Wumpus is near..." << endl;
+
+    //Check whether the player is adjacent to a pit
+  }else if(((value/CPIT) % CPIT) == ADJPIT/CPIT){
+    cout << "You feel a gust of wind... there is a pit nearby..." << endl;
+  }else{
+    cout << "There is nothing nearby... hopefully" << endl;
+  }
+  
+  return ALIVE; //The player is still alive
 } //Prints out what the player percieves, if anything

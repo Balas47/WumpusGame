@@ -32,7 +32,7 @@ public:
 
   int getGold();
   void setGold(int gold);
-  void adjuostGold(int change);
+  void adjustGold(int change);
 
 };
 

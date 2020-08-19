@@ -16,6 +16,8 @@ class Game{
   Player m_player;
   Cave  m_cave;
 
+  int m_tempGold; //The gold collected while in the cave
+
   //Start/Exit location
   pair<int, int> m_exit;
   
@@ -26,7 +28,7 @@ class Game{
   void store(); //Controls the store where the player can buy javelins
   int cave(); //Controls what happens when the player is in the cave
   void printBoard(); //Print out current location in cave, and what the player perceives
-  void precepts(int value); //Prints out what the player percieves, if anything
+  int precepts(int value); //Prints out what the player percieves, if anything
 
 };
 

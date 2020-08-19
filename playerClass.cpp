@@ -40,6 +40,6 @@ void Player::setGold(int gold){
   m_gold = gold;
 }
 
-void Player::adjuostGold(int change){
+void Player::adjustGold(int change){
   m_gold += change;
 }

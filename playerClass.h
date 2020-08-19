@@ -12,7 +12,6 @@ using namespace std;
 class Player{
 
 private:
-  pair<int, int> m_location; //Current location of the player
   int m_javelins;            //Number of javelins the player has
   int m_gold;                //Number of gold pieces the player has
 
@@ -20,6 +19,8 @@ public:
 
   Player(); //Default Constructor
   Player(pair<int, int> location, int javelins, int gold); //Overloaded Constructor
+
+  pair<int, int> m_location; //Current location of the player
 
   //Setters and getters
   pair<int, int> getLocation();

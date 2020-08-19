@@ -70,7 +70,12 @@ void Cave::nextLevel(){
 
 pair<int, int> Cave::getWumpus(){
   return m_wumpus;
-}//Get Wumpus' location
+} //Get the location of the Wumpus
+
+
+int Cave::getSize(){
+  return m_size;
+}//Get the size of the cave
 
 int Cave::checkAdj(pair<int, int> player){
 					    

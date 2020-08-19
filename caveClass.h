@@ -32,7 +32,8 @@ public:
   void reset(); //Reset the cave when needed
   void nextLevel(); //Generate the cave as a higher level
 
-  pair<int, int> getWumpus(); //Get Wumpus' location
+  pair<int, int> getWumpus(); //Get the location of the Wumpus
+  int getSize(); //Get the size of the cave
   int checkAdj(pair<int, int> player); //Check what the player is adjacent to
   void adjustGold(int change); //Adjust the amount of gold available
   int getGold(); //Get the amount of gold available

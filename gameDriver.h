@@ -25,7 +25,8 @@ class Game{
   void menu(); //Controls the menu section of the game
   void store(); //Controls the store where the player can buy javelins
   int cave(); //Controls what happens when the player is in the cave
-  void printBoard(); //Print out current location in cave, and what the player perceives 
+  void printBoard(); //Print out current location in cave, and what the player perceives
+  void precepts(int value); //Prints out what the player percieves, if anything
 
 };
 

@@ -225,3 +225,7 @@ void Cave::randomGold(){
   }
   
 } //Randomize the location of the gold
+
+void Cave::setDeath(bool death){
+  m_death = death;
+} //Make sure Wumpus dies

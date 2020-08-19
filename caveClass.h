@@ -38,6 +38,7 @@ public:
   void adjustGold(int change); //Adjust the amount of gold available
   int getGold(); //Get the amount of gold available
   bool getDeath(); //Check whether the Wumpus is dead or not
+  void setDeath(bool death); //Make sure Wumpus dies
 
   void randomWumpus(); //Randomize the location of the Wumpus
   void randomPits(); //Randomize the location of the pits

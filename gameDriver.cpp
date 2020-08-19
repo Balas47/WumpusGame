@@ -15,6 +15,7 @@ const int LEFT = 3;
 const int RIGHT = 4;
 const int SHOOT = 5;
 const int LEAVE = 6;
+const int DEEPER = 7;
 
 Game::Game(){
 
@@ -53,6 +54,8 @@ void Game::menu(){
     switch(playerOption){
       
     case PLAY:
+      //Reset the cave is necessary, and enter
+      m_cave.reset();
       cout << "You have entered the cave, good luck..." << endl;
       cave();
       break;
@@ -91,24 +94,29 @@ int Game::cave(){
   do{
     startPosition.first = rand() % m_cave.getSize();
     startPosition.second = rand() % m_cave.getSize();
-  }while(!m_cave.checkAdj(startPosition));
+  }while(m_cave.checkAdj(startPosition) != 0);
 
   //If the start position is valid, make sure that the player is there
   m_player.m_location = startPosition;
 
   int options = 0;
-
+  
+  //Variable for when the player decides to shoot
+  int direction = 0;
+  
   while(options != LEAVE){
 
+    //Player can choose what to do while in the cave
     cout << "\nWhat are you going to do?" << endl;
     cout << "1: Move Up" << endl
 	 << "2: Move Down" << endl
 	 << "3: Move Left" << endl
 	 << "4: Move Right" << endl
 	 << "5: Shoot Javelin" << endl
-	 << ((m_player.m_location == startPosition) ?"6: LEAVE CAVE\n" :"");
+    	 << ((m_player.m_location == startPosition) ?"6: LEAVE CAVE\n7: Go to a Deeper Cave\n" :"");
 
-    while(!(cin >> options) || options <= 0 || options > LEAVE){
+    //Make sure that player input is valid
+    while(!(cin >> options) || options <= 0 || options > DEEPER){
       cout << "Please enter a valid number!" << endl;
       cin.clear();
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -117,33 +125,110 @@ int Game::cave(){
     switch(options){
 
     case UP:
+      //Check that the player is not at the top of the cave
       if(m_player.m_location.first < m_cave.getSize()) m_player.m_location.first += 1;
       else cout << "You cannot move up anymore!" << endl;
       precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case DOWN:
+      //Check that the player is not at the bottom of the cave
       if(m_player.m_location.first > 0) m_player.m_location.first -= 1;
       else cout << "You cannot move down anymore!" << endl;
       precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case LEFT:
+      //Check that the player is not at the left edge of the cave
       if(m_player.m_location.second > 0) m_player.m_location.second -= 1;
       else cout << "You cannot move left anymore!" << endl;
       precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case RIGHT:
+      //Check that the player is not at the right edge of the cave
       if(m_player.m_location.second < m_cave.getSize()) m_player.m_location.second += 1;
       else cout << "You cannot move right anymore!" << endl;
       precepts(m_cave.checkAdj(m_player.m_location));
       break;
 
     case SHOOT:
+
+      //Can only shoot if you have a javelin
+      if(m_player.getJavelins() == 0){
+	cout << "You have no javelins left!" << endl;
+	break;
+      }
+
+      cout << "\nWhat direction did you want to shoot?" << endl
+	   << "1: Shoot Up" << endl
+	   << "2: Shoot Down" << endl
+	   << "3: Shoot Left" << endl
+	   << "4: Shoot Right" << endl;
+
+      //Make sure that player input is valid
+      while(!(cin >> direction) || options <= 0 || options > LEAVE){
+	cout << "Please enter a valid number!" << endl;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      }
+
+      //Check if the javelin hits the Wumpus or not
+      if(direction == UP){
+	if((m_player.m_location.first < m_cave.getWumpus().first)
+	   && m_player.m_location.second == m_cave.getWumpus().second){
+	  cout << "You killed the Wumpus!" << endl;
+	  m_cave.setDeath(true); //Indicate that Wumpus has died
+	}else{
+	  cout << "You missed the Wumpus!" << endl;
+	}
+      }else if(direction == DOWN){
+	if(m_player.m_location.first > m_cave.getWumpus().first
+	   && m_player.m_location.second == m_cave.getWumpus().second){
+	  cout << "You killed the Wumpus!" << endl;
+	  m_cave.setDeath(true);
+	}else{
+	  cout << "You missed the Wumpus!" << endl;
+	}
+      }else if(direction == LEFT){
+	if(m_player.m_location.second > m_cave.getWumpus().second
+	   && m_player.m_location.first == m_cave.getWumpus().first){
+	  cout << "You killed the Wumpus!" << endl;
+	  m_cave.setDeath(true);
+	}else{
+	  cout << "You missed the Wumpus!" << endl;
+	}
+      }else if(direction == RIGHT){
+	if(m_player.m_location.second < m_cave.getWumpus().second
+	   && m_player.m_location.first == m_cave.getWumpus().first){
+	  cout << "You killed the Wumpus!" << endl;
+	  m_cave.setDeath(true);
+	}else{
+	  cout << "You missed the Wumpus!" << endl;
+	}
+      }else{
+	cout << "ERROR: Invalid Option!" << endl;
+      }
+
+      //Take away one of the players javelins
+      m_player.adjustJavelins(-1);
       break;
 
     case LEAVE:
+
+      //Make sure that the player is actually able to leave
+      if(m_player.m_location != startPosition) cout << "You can't leave yet!" << endl;
+      else cout << "Please come again :)" << endl;
+      break;
+
+    case DEEPER:
+
+      //Make sure that the player is actually able to descend
+      if(m_player.m_location != startPosition) cout << "You can't leave yet!" << endl;
+      else{
+	m_cave.nextLevel();
+	cout << "Beware, there are more pits... but there is also more gold!" << endl;
+      }
       break;
 
     default:

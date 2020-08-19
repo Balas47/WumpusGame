@@ -1,5 +1,6 @@
 #include "gameDriver.h"
 #include <limits>
+#include <iomanip>
 using namespace std;
 
 //Constants for menu
@@ -142,6 +143,7 @@ int Game::cave(){
   while(options != LEAVE && status == ALIVE){
 
     //Player can choose what to do while in the cave
+    printBoard();
     cout << "\nWhat are you going to do?" << endl;
     cout << "1: Move Up" << endl
 	 << "2: Move Down" << endl
@@ -277,7 +279,22 @@ int Game::cave(){
   return status;
 } //Controls what happens when the player is in the cave
 
-void Game::printBoard(){} //Print out current location in cave, and what the player perceives
+void Game::printBoard(){
+  
+  //Print out the board with player location
+  for(int i=m_cave.getSize();i>=0;i--){
+    for(int j=m_cave.getSize();j>=0;j--){
+
+      //Prints out an X where the player is, and a "_" otherwise
+      //setw used to make the output nicer
+      pair<int, int> testLocation = make_pair(i, j);
+      if(testLocation == m_player.m_location) cout << setw(2) << "X";
+      else cout << setw(2) << "_";
+    }
+    cout << endl;
+  }
+
+} //Print out current location
 
 int Game::precepts(int value){
 
@@ -297,11 +314,11 @@ int Game::precepts(int value){
   }
   
   //Check whether the player is adjacent to the Wumpus
-  if(value/CWUMPUS == ADJWUMPUS/CWUMPUS){
+  if(value/CWUMPUS == ADJWUMPUS/CWUMPUS){ //Isolates the Wumpus(100's) digit
     cout << "You smell a terrible stench... the Wumpus is near..." << endl;
 
     //Check whether the player is adjacent to a pit
-  }else if(((value/CPIT) % CPIT) == ADJPIT/CPIT){
+  }else if(((value/CPIT) % CPIT) == ADJPIT/CPIT){ //Isolates the Pits(10's) digit
     cout << "You feel a gust of wind... there is a pit nearby..." << endl;
   }else{
     cout << "There is nothing nearby... hopefully" << endl;

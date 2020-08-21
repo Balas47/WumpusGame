@@ -283,8 +283,8 @@ void Game::printBoard(){
   
   //Print out the board with player location
   for(int i=m_cave.getSize();i>=0;i--){
-    for(int j=m_cave.getSize();j>=0;j--){
-
+    for(int j=0;j<m_cave.getSize();j++){
+      
       //Prints out an X where the player is, and a "_" otherwise
       //setw used to make the output nicer
       pair<int, int> testLocation = make_pair(i, j);

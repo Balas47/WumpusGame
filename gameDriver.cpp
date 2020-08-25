@@ -4,12 +4,17 @@
 using namespace std;
 
 //Constants for menu
+enum MenuThings{PLAY=1, STORE, INFO, EXIT};
+/*
 const int PLAY = 1;
 const int STORE = 2;
 const int INFO = 3;
 const int EXIT = 4;
+*/
 
 //Constants for cave
+enum CaveThings{UP=1, DOWN, LEFT, RIGHT, SHOOT, LEAVE, DEEPER};
+/*
 const int UP = 1;
 const int DOWN = 2;
 const int LEFT = 3;
@@ -17,6 +22,11 @@ const int RIGHT = 4;
 const int SHOOT = 5;
 const int LEAVE = 6;
 const int DEEPER = 7;
+*/
+
+//Constants for store
+enum StoreThings{ONE=1, ALL, NONE};
+const int PRICE = 100;
 
 //Constants for precepts
 const int CWUMPUS = 100;
@@ -96,7 +106,6 @@ void Game::menu(){
       break;
       
     case STORE:
-      cout << "You have gone to the store, make your choice" << endl;
       store();
       break;
 
@@ -117,7 +126,52 @@ void Game::menu(){
   
 } //Controls the menu section of the game
 
-void Game::store(){} //Controls the store where the player can buy javelins
+void Game::store(){
+
+  //Basically the player will have three choices, buy one javelin, buy as many javelins as they
+  //can, or leave
+
+  int options = 0;
+
+  cout << "Welcome to the Store!" << endl;
+  
+  while(options != NONE){
+    cout << "\n The price per javelin is 100 gold pieces, how many do ya want?" << endl;
+
+    cout << "1. Buy a Javelin" << endl
+	 << "2. Buy as many Javelins as I Have Gold" << endl
+	 << "3. Leave the Store" << endl;
+
+    //Input validation loop
+    while(!(cin >> options) || options <= 0 || options > NONE){
+      cout << "Please enter a valid number!" << endl;
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    switch(options){
+
+    case ONE:
+      if(m_player.getGold() != 0){
+	m_player.adjustGold(-PRICE);
+	m_player.adjustJavelins(1);
+      }
+      else cout << "You don't have enough gold!" << endl;
+      break;
+
+    case ALL:
+      cout << "You have bought " << m_player.getGold()/PRICE << " javelins! " << endl;
+      m_player.adjustJavelins(m_player.getGold()/PRICE);
+      m_player.setGold(0);
+      break;
+
+    case NONE:
+      cout << "Alrighty, good bye!" << endl;
+      break;
+      
+    }
+  }
+} //Controls the store where the player can buy javelins
 
 int Game::cave(){
 
@@ -254,7 +308,10 @@ int Game::cave(){
     case LEAVE:
 
       //Make sure that the player is actually able to leave
-      if(m_player.m_location != startPosition) cout << "You can't leave yet!" << endl;
+      if(m_player.m_location != startPosition){
+	cout << "You can't leave yet!" << endl;
+	options = 0; //Have to change option so that we dont exit the while loop
+      }
       else cout << "Please come again :)" << endl;
       break;
 
@@ -299,7 +356,7 @@ void Game::printBoard(){
 int Game::precepts(int value){
 
   //First check if the player is with the Wumpus, or in a pit
-  if(value == WWUMPUS){
+  if(value == WWUMPUS && !m_cave.getDeath()){
     cout << "THE WUMPUS HAS EATEN YOU" << endl
 	 << "Better Luck Next Time" << endl;
     return DEAD; //The player has died

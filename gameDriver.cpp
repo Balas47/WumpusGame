@@ -36,11 +36,11 @@ const int CPIT = 10;
 const int ADJWUMPUS = 100; //Adjacent to the wumpus
 const int WWUMPUS   = 200; //With the wumpus
 
-const int ADJPIT = 10; //Adjacent to a pit
-const int WPIT   = 20; //With a pit
+const int ADJPIT = 10;
+const int WPIT   = 20;
 
-const int ADJGOLD = 1; //Adjacent to gold
-const int WGOLD   = 2; //With a gold pile
+const int ADJGOLD = 1;
+const int WGOLD   = 2;
 
 const int EMPTY = 0; //Not adjacent to anything
 
@@ -189,9 +189,8 @@ int Game::cave(){
   m_player.m_location = startPosition;
 
   int options = 0;
-  int status = ALIVE; //The player starts out alive
+  int status = ALIVE;
   
-  //Variable for when the player decides to shoot
   int direction = 0;
   
   while(options != LEAVE && status == ALIVE){

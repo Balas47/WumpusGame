@@ -18,7 +18,7 @@ const int EMPTY = 0; //Not adjacent to anything
 //Default Constructor
 Cave::Cave(){
 
-  m_size = 10; //Start out with a 10X10 cave.
+  m_size = 5; //Start out with a 5X5 cave.
   
   randomWumpus();
   m_death = false;
@@ -35,7 +35,7 @@ Cave::Cave(){
 //is exactly like the default constructor.
 void Cave::reset(){
   
-  m_size = 10;
+  m_size = 5;
 
   randomWumpus();
   m_death = false;
@@ -85,12 +85,12 @@ int Cave::checkAdj(pair<int, int> player){
   if(player.first == m_wumpus.first){
 
     if(player.second == m_wumpus.second){
-      return WWUMPUS; //Player is with the wumpus
+      return WWUMPUS;
 
       //Player is on the same row, so now we check if the player is on a column adjacent
       //to the Wumpus.
     }else if((player.second == m_wumpus.second + 1) | (player.second == m_wumpus.second - 1)){
-      checks += ADJWUMPUS; //Player is adjacent to the wumpus
+      checks += ADJWUMPUS;
 
     }
     
@@ -99,62 +99,57 @@ int Cave::checkAdj(pair<int, int> player){
     //Player is on the same column, so now we check if the player is on a row adjacent
     //to the Wumpus
     if((player.first == m_wumpus.first + 1) | (player.first == m_wumpus.first - 1)){
-      checks += ADJWUMPUS; //Player is adjacent to the wumpus
+      checks += ADJWUMPUS;
 
     }
   }
 
-  //Check if the player is next to a pit, using an iterator for the pits
   for(vector<pair<int, int>>::iterator it=m_pits.begin(); it!=m_pits.end(); ++it){
     
-    //Check if the player is in the same row as a pit
     if(player.first == it->first){
       
       if(player.second == it->second){
-	return WPIT; //Player is in a pit
+	return WPIT;
 	
-	//Check if the player is also on a column adjacent to the pit
       }else if((player.second == it->second + 1) | (player.second == it->second - 1)){
-	checks += ADJPIT; //Player is adjacent to a pit
+	checks += ADJPIT;
 	break;
       }
       
-      //Check if the player is in the same column as a pit
     }else if(player.second == it->second){
       
-      //Check if the player is in the same row as a pit
       if((player.first == it->first + 1) | (player.first == it->first - 1)){
-	checks += ADJPIT; //Player is adjacent to a pit
+	checks += ADJPIT;
 	break;
       }
     }
   }
+
+  int count = 0; //For removing collected gold
   
-  //Check if the player is on a gold pile
   for(vector<pair<int, int>>::iterator it=m_gold.begin(); it!=m_gold.end(); ++it){
+
     
-    //Check if the player is in the same row as a gold pile
     if(player.first == it->first){
       
       if(player.second == it->second){
-        checks += WGOLD; //Player is in a gold pile
+        checks += WGOLD; 
+	m_gold.erase(m_gold.begin() + count);
 	break;
 	
-        //Check if the player is also on a column adjacent to a gold pile
       }else if((player.second == it->second + 1) | (player.second == it->second - 1)){
-        checks += ADJGOLD; //Player is adjacent to a gold pile
+        checks += ADJGOLD;
 	break;
       }
       
-      //Check if the player is in the same column as a gold pile
     }else if(player.second == it->second){
       
-      //Check if the player is in the same row as a gold pile
       if((player.first == it->first + 1) | (player.first == it->first - 1)){
-        checks += ADJGOLD; //Player is adjacent to a gold pile
+        checks += ADJGOLD;
 	break;
       }
     }
+    count++;
   }
   
   return checks;
@@ -182,10 +177,8 @@ void Cave::randomWumpus(){
 } //Randomize the location of the Wumpus
 
 void Cave::randomPits(){
-  //Initialize random seed
-  srand(time(NULL));
 
-  //Temporary pair to be put into list of pits
+  srand(time(NULL));
   pair<int, int> temp;
 
   //Clear the previous pits if they exist
@@ -203,7 +196,7 @@ void Cave::randomPits(){
 } //Randomize the location of the pits
 
 void Cave::randomGold(){
-  //Initialize random seed
+
   srand(time(NULL));
 
   //Clear the previous gold piles if they exist
@@ -211,8 +204,6 @@ void Cave::randomGold(){
   
   //Each pile of gold will have 100 pieces
   int numPiles = m_allGold / 100;
-
-  //Temporary pair to be put into list of gold piles
   pair<int, int> temp;
   
   //Gold piles will be randomly placed
